@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Questions - Admin | DoConnect</title>
+    
+    <!-- Bootstrap 5.3 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --danger-gradient: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);
+            --glass-bg: rgba(255, 255, 255, 0.98);
+            --glass-hover: rgba(255, 255, 255, 0.99);
+            --shadow-xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --shadow-glow: 0 0 0 1px rgba(255,255,255,0.4);
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(120,219,255,0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* ✅ PERFECTLY VISIBLE PAGE HEADER */
+        .page-header {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            box-shadow: var(--shadow-xl);
+            border: var(--shadow-glow);
+            padding: 32px;
+            margin: 24px 0 40px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ✅ BOLD DARK TITLE - PERFECT VISIBILITY */
+        .page-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1f2937 !important;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+            margin: 0 0 8px 0;
+            line-height: 1.1;
+            background: none !important;
+            -webkit-text-fill-color: inherit !important;
+        }
+
+        /* ✅ DARK SUBTITLE */
+        .page-subtitle {
+            color: #495057 !important;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .page-subtitle strong {
+            color: #1f2937 !important;
+        }
+
+        /* ✅ PERFECT BACK BUTTON */
+        .back-btn {
+            padding: 16px 32px !important;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95) !important;
+            color: #495057 !important;
+            border: 2px solid rgba(108, 117, 125, 0.3) !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
+            text-shadow: none !important;
+        }
+
+        .back-btn:hover {
+            background: white !important;
+            color: #1f2937 !important;
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.25) !important;
+            border-color: #495057 !important;
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .question-card {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            border: var(--shadow-glow);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            box-shadow: var(--shadow-xl);
+            height: 100%;
+            animation: cardSlideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .question-card:nth-child(1) { animation-delay: 0.1s; }
+        .question-card:nth-child(2) { animation-delay: 0.2s; }
+        .question-card:nth-child(3) { animation-delay: 0.3s; }
+        .question-card:nth-child(4) { animation-delay: 0.4s; }
+        .question-card:nth-child(5) { animation-delay: 0.5s; }
+        .question-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes cardSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.15) 100%);
+            padding: 28px 32px;
+            border: none;
+            border-radius: 28px 28px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        /* ✅ FIXED CARD TEXTS */
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1f2937 !important;
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .card-preview {
+            color: #374151 !important;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0 0 20px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #6b7280 !important;
+        }
+
+        .status-badge {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-approved {
+            background: var(--success-gradient);
+            color: white;
+            animation: pulse-success 2s infinite;
+        }
+
+        .status-pending {
+            background: var(--warning-gradient);
+            color: #333 !important;
+            animation: pulse-warning 2s infinite;
+        }
+
+        @keyframes pulse-success {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(17,153,142,0.7); }
+            50% { box-shadow: 0 0 0 8px rgba(17,153,142,0); }
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(246,211,101,0.7); }
+            50% { box-shadow: 0 0 0 8px rgba(246,211,101,0); }
+        }
+
+        .card-actions {
+            padding: 24px 32px 32px;
+            background: rgba(255,255,255,0.6);
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-action {
+            padding: 14px 28px;
+            border-radius: 20px;
+            font-weight: 700;
+            border: none;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 120px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            color: white !important;
+        }
+
+        .btn-approve {
+            background: var(--success-gradient);
+            box-shadow: 0 8px 24px rgba(17,153,142,0.4);
+        }
+
+        .btn-approve:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(17,153,142,0.6);
+        }
+
+        .btn-delete {
+            background: var(--danger-gradient);
+            box-shadow: 0 8px 24px rgba(255,118,117,0.4);
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(255,118,117,0.6);
+        }
+
+        .btn-view {
+            background: rgba(102,126,234,0.15);
+            color: #667eea !important;
+            border: 2px solid rgba(102,126,234,0.4);
+            font-weight: 600;
+        }
+
+        .btn-view:hover {
+            background: rgba(102,126,234,0.25);
+            transform: translateY(-2px);
+            border-color: #667eea;
+            color: #667eea !important;
+        }
+
+        .empty-state {
+            background: rgba(255, 255, 255, 0.98) !important;
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            border: var(--shadow-glow);
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            margin: 40px 0;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .empty-icon {
+            font-size: 6rem;
+            color: rgba(107, 114, 128, 0.4) !important;
+            margin-bottom: 24px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .empty-state h3 {
+            color: #1f2937 !important;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: #495057 !important;
+        }
+
+        .empty-state .btn {
+            background: white !important;
+            color: #667eea !important;
+            border: 2px solid #667eea !important;
+            font-weight: 600;
+            padding: 16px 32px;
+        }
+
+        @media (max-width: 768px) {
+            .questions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 0 10px;
+            }
+            .page-header {
+                padding: 24px 20px;
+                margin: 20px 10px 32px;
+            }
+            .question-card {
+                margin: 0 4px;
+            }
+            .card-actions {
+                padding: 20px;
+            }
+            .btn-action {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                min-width: 100px;
+            }
+            .page-title {
+                font-size: 2.2rem;
+            }
+            .back-btn {
+                width: 100%;
+                margin-top: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid py-4">
+    <!-- ✅ PERFECTLY VISIBLE HEADER -->
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h1 class="page-title">📝 Manage Questions</h1>
+                <p class="page-subtitle">
+                    <span th:text="${#lists.size(questions)}">0</span> questions found
+                </p>
+            </div>
+            <a href="/admin/dashboard" class="back-btn">
+                <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div th:if="${#lists.isEmpty(questions)}" class="empty-state">
+        <div class="empty-icon">
+            <i class="bi bi-question-circle"></i>
+        </div>
+        <h3 class="mb-4 fw-bold">No questions yet</h3>
+        <p class="lead mb-5">Users haven't posted any questions. They'll appear here when they do!</p>
+        <a href="/admin/dashboard" class="btn btn-lg px-5 py-3">
+            <i class="bi bi-house-door me-2"></i>Go to Dashboard
+        </a>
+    </div>
+
+    <!-- QUESTIONS GRID -->
+    <div th:unless="${#lists.isEmpty(questions)}" class="questions-grid">
+        <div th:each="question : ${questions}" class="question-card">
+            <!-- CARD HEADER -->
+            <div class="card-header">
+                <h5 class="card-title" th:text="${question.title}">Question Title Here</h5>
+                <p class="card-preview" th:text="${question.content}">Question content preview will appear here...</p>
+                
+                <div class="card-meta">
+                    <span>
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span th:text="${question.userEmail}">user@example.com</span>
+                    </span>
+                    <span>
+                        <i class="bi bi-clock me-1"></i>
+                        <span th:text="${question.createdAt}">Just now</span>
+                    </span>
+                    
+                    <!-- STATUS BADGE -->
+                    <span th:if="${question.approved}" class="status-badge status-approved ms-auto">
+                        ✅ APPROVED
+                    </span>
+                    <span th:unless="${question.approved}" class="status-badge status-pending ms-auto">
+                        ⏳ PENDING
+                    </span>
+                </div>
+            </div>
+
+            <!-- CARD ACTIONS -->
+            <div class="card-actions">
+                <div class="d-flex gap-2 justify-content-between">
+                    <!-- APPROVE BUTTON -->
+                    <button th:if="${!question.approved}" 
+                            th:onclick="'approveQuestion(' + ${question.id} + ')'"
+                            class="btn-action btn-approve flex-fill me-1">
+                        <i class="bi bi-check-circle-fill"></i>
+                        APPROVE
+                    </button>
+                    
+                    <!-- VIEW BUTTON -->
+                    <a th:href="@{/admin/questions/{id}(id=${question.id})}" 
+                       class="btn-action btn-view px-3">
+                        <i class="bi bi-eye"></i>
+                        VIEW
+                    </a>
+                    
+                    <!-- DELETE BUTTON -->
+                    <button th:onclick="'deleteQuestion(' + ${question.id} + ')'"
+                            class="btn-action btn-delete flex-fill ms-1">
+                        <i class="bi bi-trash-fill"></i>
+                        DELETE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function approveQuestion(id) {
+    console.log("🔥 APPROVE CLICKED:", id);
+    if (!confirm('✅ Make this question public for all users?')) return;
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-hourglass-split spinner-border spinner-border-sm me-2"></i>APPROVING...';
+    
+    fetch(`/admin/questions/${id}/approve`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(r => r.text())
+    .then(msg => {
+        console.log("✅ APPROVED:", msg);
+        btn.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>APPROVED!';
+        btn.style.background = 'var(--success-gradient)';
+        setTimeout(() => location.reload(), 1200);
+    })
+    .catch(e => {
+        console.error("❌ ERROR:", e);
+        alert('❌ Approve failed. Please try again.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+
+function deleteQuestion(id) {
+    console.log("🔥 DELETE CLICKED:", id);
+    if (!confirm('🗑️ Delete this question permanently? This cannot be undone.')) return;
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-hourglass-split spinner-border spinner-border-sm me-2"></i>DELETING...';
+    
+    fetch(`/admin/questions/${id}/delete`, { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(r => r.text())
+    .then(msg => {
+        console.log("✅ DELETED:", msg);
+        btn.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>DELETED!';
+        btn.style.background = 'var(--success-gradient)';
+        setTimeout(() => location.reload(), 1200);
+    })
+    .catch(e => {
+        console.error("❌ ERROR:", e);
+        alert('❌ Delete failed. Please try again.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+</script>
+</body>
+</html>

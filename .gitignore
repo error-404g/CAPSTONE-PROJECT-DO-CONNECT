@@ -1,0 +1,10 @@
+**/target/
+**/.project
+**/.classpath
+**/.settings/
+**/.idea/
+**/*.iml
+**/*.log
+**/application.properties
+**/application.yml
+**/application-*.yml

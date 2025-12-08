@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Questions - Admin | DoConnect</title>
+    
+    <!-- Bootstrap 5.3 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --info-gradient: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            --danger-gradient: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%);
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --shadow-xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --shadow-glow: 0 0 0 1px rgba(255,255,255,0.2);
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120,219,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,182,193,0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: bgFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.02); }
+        }
+
+        .page-header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            border: var(--shadow-glow);
+            padding: 32px;
+            margin-bottom: 32px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            animation: slideDown 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--warning-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .filter-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-xl);
+            border: var(--shadow-glow);
+            margin-bottom: 32px;
+        }
+
+        .filter-btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            min-width: 130px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.2);
+        }
+
+        .filter-btn-all { 
+            background: var(--primary-gradient); 
+            color: white;
+            border-color: rgba(102,126,234,0.3);
+        }
+
+        .filter-btn-pending { 
+            background: var(--warning-gradient); 
+            color: #333;
+            border-color: rgba(246,211,101,0.4);
+        }
+
+        .filter-btn-approved { 
+            background: var(--success-gradient); 
+            color: white;
+            border-color: rgba(17,153,142,0.3);
+        }
+
+        .stats-info {
+            background: linear-gradient(135deg, rgba(246,211,101,0.15) 0%, rgba(253,160,133,0.15) 100%);
+            border-radius: 16px;
+            padding: 16px 24px;
+            border-left: 4px solid #f6d365;
+        }
+
+        /* TABLE */
+        .questions-table-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            border: var(--shadow-glow);
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .table th {
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border: none;
+            padding: 20px 16px;
+        }
+
+        .table td {
+            padding: 24px 16px;
+            vertical-align: middle;
+            border-color: rgba(0,0,0,0.05);
+        }
+
+        .table tbody tr {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+            margin: 8px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .table tbody tr:hover {
+            background: rgba(246,211,101,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+        }
+
+        .title-cell {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 1.1rem;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .preview-cell {
+            color: #6b7280;
+            font-size: 0.95rem;
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .status-badge {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background: var(--warning-gradient);
+            color: #333;
+            animation: pulse-warning 2s infinite;
+        }
+
+        .status-approved {
+            background: var(--success-gradient);
+            color: white;
+            animation: pulse-success 2s infinite;
+        }
+
+        .status-resolved {
+            background: var(--info-gradient);
+            color: white;
+            animation: pulse-info 2s infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(246,211,101,0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(246,211,101,0); }
+        }
+
+        @keyframes pulse-success {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(17,153,142,0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(17,153,142,0); }
+        }
+
+        @keyframes pulse-info {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(116,185,255,0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(116,185,255,0); }
+        }
+
+        .action-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            min-width: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-approve {
+            background: var(--success-gradient);
+            color: white;
+            box-shadow: 0 6px 20px rgba(17,153,142,0.4);
+        }
+
+        .btn-approve:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(17,153,142,0.6);
+        }
+
+        .btn-resolve {
+            background: var(--info-gradient);
+            color: white;
+            box-shadow: 0 6px 20px rgba(116,185,255,0.4);
+        }
+
+        .btn-resolve:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(116,185,255,0.6);
+        }
+
+        .btn-delete {
+            background: var(--danger-gradient);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255,118,117,0.4);
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255,118,117,0.6);
+        }
+
+        /* PAGINATION */
+        .pagination-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-xl);
+            border: var(--shadow-glow);
+        }
+
+        .page-link {
+            border-radius: 12px;
+            margin: 0 6px;
+            border: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-item.active .page-link {
+            background: var(--warning-gradient);
+            color: #333;
+            box-shadow: 0 8px 24px rgba(246,211,101,0.4);
+        }
+
+        .page-item:not(.active) .page-link:hover {
+            background: rgba(246,211,101,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .empty-state {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,248,220,0.9) 100%);
+            border-radius: 24px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            border: var(--shadow-glow);
+        }
+
+        @media (max-width: 768px) {
+            .page-header, .filter-section {
+                padding: 24px 20px;
+                margin: 0 10px 20px;
+            }
+            .table-responsive {
+                margin: 0 10px;
+            }
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                min-width: auto;
+            }
+            .action-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid py-4">
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="page-title">
+                    <i class="bi bi-question-circle-fill me-3"></i>
+                    Manage Questions
+                </h1>
+                <p class="mb-0 text-muted fs-6">Review, approve, and moderate questions</p>
+            </div>
+            <a th:href="@{/admin/dashboard}" class="btn btn-outline-secondary btn-lg px-4 py-2">
+                <i class="bi bi-arrow-left me-2"></i>Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- FILTER + STATS -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="filter-section">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="btn-group w-100" role="group">
+                            <a th:href="@{/admin/questions(page=0)}" 
+                               th:class="${approvedFilter == null} ? 'filter-btn filter-btn-all active' : 'filter-btn filter-btn-all'">
+                                All Questions
+                            </a>
+                            <a th:href="@{/admin/questions(approved=false, page=0)}" 
+                               th:class="${approvedFilter != null and !approvedFilter} ? 'filter-btn filter-btn-pending active' : 'filter-btn filter-btn-pending'">
+                                Pending Review
+                            </a>
+                            <a th:href="@{/admin/questions(approved=true, page=0)}" 
+                               th:class="${approvedFilter == true} ? 'filter-btn filter-btn-approved active' : 'filter-btn filter-btn-approved'">
+                                Approved
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <div class="stats-info p-3">
+                            <span class="text-muted d-block d-md-inline fs-6">
+                                Showing <strong th:text="${#lists.size(questions)}">0</strong> of 
+                                <strong th:text="${totalElements}">0</strong> questions
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUESTIONS TABLE -->
+    <div class="questions-table-container">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-header">
+                    <tr>
+                        <th><i class="bi bi-hash me-1"></i>ID</th>
+                        <th><i class="bi bi-type me-1"></i>Title</th>
+                        <th><i class="bi bi-card-text me-1"></i>Preview</th>
+                        <th><i class="bi bi-circle-fill me-1"></i>Status</th>
+                        <th><i class="bi bi-person me-1"></i>User</th>
+                        <th><i class="bi bi-gear-fill me-1"></i>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="question : ${questions}">
+                        <td class="fw-bold text-primary" th:text="${question.id}">1</td>
+                        <td class="title-cell" th:text="${question.title}">Question title</td>
+                        <td class="preview-cell" th:text="${question.content?.substring(0, 50)} + '...'">Content preview...</td>
+                        <td>
+                            <span th:if="${!question.approved}" class="status-badge status-pending">⏳ Pending</span>
+                            <span th:if="${question.approved and !question.resolved}" class="status-badge status-approved">✅ Approved</span>
+                            <span th:if="${question.resolved}" class="status-badge status-resolved">🔒 Resolved</span>
+                        </td>
+                        <td class="fw-semibold" th:text="${question.userEmail}">user@example.com</td>
+                        <td>
+                            <div class="action-group">
+                                <!-- Approve -->
+                                <a th:if="${!question.approved}" 
+                                   th:href="@{/admin/questions/{id}/approve(id=${question.id})}" 
+                                   class="action-btn btn-approve"
+                                   onclick="return confirm('Approve this question for public view?')">
+                                    <i class="bi bi-check-circle"></i>Approve
+                                </a>
+                                
+                                <!-- Resolve -->
+                                <a th:href="@{/admin/questions/{id}/resolve(id=${question.id})}" 
+                                   class="action-btn btn-resolve"
+                                   onclick="return confirm('Mark this question as resolved?')">
+                                    <i class="bi bi-check2-circle"></i>Resolve
+                                </a>
+                                
+                                <!-- Delete -->
+                                <button th:attr="data-qid=${question.id}" 
+                                        class="action-btn btn-delete delete-btn"
+                                        onclick="deleteQuestion(this.dataset.qid)">
+                                    <i class="bi bi-trash"></i>Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Empty state -->
+                    <tr th:if="${#lists.isEmpty(questions)}">
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <i class="bi bi-question-lg fs-1 text-muted mb-4"></i>
+                                <h4 class="text-muted mb-3">No questions found</h4>
+                                <p class="text-muted mb-4">Try adjusting your filters above or wait for new questions</p>
+                                <a th:href="@{/admin/questions(page=0)}" class="btn btn-outline-warning">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Reset Filters
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div th:if="${totalPages > 1}" class="pagination-container">
+        <nav>
+            <ul class="pagination justify-content-center mb-0">
+                <li class="page-item" th:class="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/questions(page=${currentPage - 1}, size=10, approved=${approvedFilter})}">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" 
+                    th:class="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/admin/questions(page=${i}, size=10, approved=${approvedFilter})}" th:text="${i + 1}">1</a>
+                </li>
+                <li class="page-item" th:class="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/admin/questions(page=${currentPage + 1}, size=10, approved=${approvedFilter})}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function deleteQuestion(qid) {
+    if (confirm('Delete this question permanently? This action cannot be undone.')) {
+        fetch(`/admin/questions/${qid}/delete`, { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('Delete failed. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Network error. Please try again.');
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Table row animations
+    document.querySelectorAll('tbody tr').forEach((row, index) => {
+        row.style.animationDelay = `${index * 0.1}s`;
+    });
+    
+    console.log('✅ Admin Questions page loaded');
+});
+</script>
+</body>
+</html>

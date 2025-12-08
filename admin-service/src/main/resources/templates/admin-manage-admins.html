@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Admins</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Admin Accounts</h2>
+    
+    <!-- ONLY TABLE - No create form -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="admin : ${admins}">
+                    <td th:text="${admin.id}"></td>
+                    <td th:text="${admin.username}"></td>
+                    <td th:text="${admin.email}"></td>
+                    <td th:text="${admin.role}"></td>
+                    <td>
+                        <span th:text="${admin.isActive} ? 'Active' : 'Blocked'" 
+                              th:class="${admin.isActive} ? 'badge bg-success' : 'badge bg-danger'">
+                        </span>
+                    </td>
+                </tr>
+                <tr th:if="${admins.isEmpty()}">
+                    <td colspan="5" class="text-center text-muted">No admins found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <a th:href="@{/admin/dashboard}" class="btn btn-secondary">← Back to Dashboard</a>
+</div>
+<!-- BOTTOM - BEFORE </body> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const adminJwt = localStorage.getItem('admin_jwt');
+    
+    // ✅ AUTO ADD JWT TO ALL FETCH/AJAX requests
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+        if (adminJwt && args[1]) {
+            args[1].headers = args[1].headers || {};
+            args[1].headers['Authorization'] = `Bearer ${adminJwt}`;
+        }
+        return originalFetch.apply(this, args);
+    };
+    
+    console.log('✅ Admin JWT interceptor loaded');
+});
+</script>
+
+</body>
+</html>
