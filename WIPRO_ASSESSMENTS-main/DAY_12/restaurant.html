@@ -1,0 +1,113 @@
+<!-- Create a mini restaurant menu webpage using HTML. Include headings, sections for Starters and Main Course with tables for dish details, at least one image, an unordered list of drinks or desserts, links, and a footer. Use <strong>/<em>, <hr>, <section>, and comments to structure and highlight content. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Menu</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 25px;
+        background: rgb(231, 211, 181);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: 0.3s ease;
+      }
+      th,
+      td {
+        border: 1px solid #5a3e1b;
+        padding: 10px;
+        text-align: center;
+        padding: 10px;
+        background: #f7e9d3;
+      }
+      th {
+        background: #eaeaee;
+      }
+      footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 14px;
+      }
+      tr:hover {
+        color: darkmagenta;
+      }
+      img {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">
+      Welcome to The Great Karikalan Restaurant
+    </h1>
+    <p style="text-align: center">Authentic Indian style</p>
+    <img src="Restaurant.jpeg" alt="Sample Food Image" width="200px" style="" />
+    <hr />
+    <section>
+      <h2>Starters</h2>
+      <table>
+        <tr>
+          <th>Dish</th>
+          <th>Price in Rupees</th>
+        </tr>
+        <tr>
+          <td>Chicken Soup</td>
+          <td>120</td>
+        </tr>
+        <tr>
+          <td>Chicken Tikka</td>
+          <td>250</td>
+        </tr>
+      </table>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Main Course</h2>
+      <table>
+        <tr>
+          <th>Dish</th>
+          <th>Price in Rupees</th>
+        </tr>
+        <tr>
+          <td>Mutton Biryani</td>
+          <td>350</td>
+        </tr>
+        <tr>
+          <td>Butter Chicken</td>
+          <td>250</td>
+        </tr>
+      </table>
+    </section>
+
+    <hr />
+
+    <h2>Drinks & Desserts</h2>
+    <ul>
+      <li>Mango Lassi</li>
+      <li>Tiramisu</li>
+      <li>Chocolate Ice Cream</li>
+    </ul>
+
+    <p>
+      For full menu:
+      <a href="http://127.0.0.1:5500/restaurant.html" target="_blank"
+        >Click here</a
+      >
+    </p>
+
+    <footer>
+      <p>&copy; 2025 The Great Karikalan Restaurant. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

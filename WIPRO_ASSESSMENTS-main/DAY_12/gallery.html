@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Art Gallery</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        background: #111;
+        color: white;
+      }
+      header,
+      footer {
+        text-align: center;
+        padding: 20px;
+        background: #222;
+        font-size: 22px;
+        letter-spacing: 1px;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 30px;
+      }
+      .item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .item img {
+        width: 100%;
+        display: block;
+        transition: 0.4s;
+      }
+      .caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        transform: translateY(100%);
+        transition: 0.4s;
+        font-size: 14px;
+      }
+      .item:hover img {
+        transform: scale(1.08);
+      }
+      .item:hover .caption {
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <header>Digital Museum — Evolution of Human Imagination</header>
+
+    <div class="gallery">
+      <div class="item">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWt365CryFfJBXSIemjX2cGPYUrYbdJFk1MZ90SSt61CEadA4PefKyJWm07ruxrT3A23s&usqp=CAU"
+          alt="Art1"
+        />
+        <div class="caption">
+          <strong>The LUME</strong><br />Artist: AAA<br />Year: 2020
+        </div>
+      </div>
+
+      <div class="item">
+        <img
+          src="https://ih1.redbubble.net/image.5072834266.0784/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+          alt="Art2"
+        />
+        <div class="caption">
+          <strong>NFT Art</strong><br />Artist: BBB<br />Year: 2071
+        </div>
+      </div>
+
+      <div class="item">
+        <img
+          src="https://preview.redd.it/cherry-blossom-v0-51jutjd2d7nd1.jpeg?auto=webp&s=40a52d9eb04165aa27403ebff38ee22f315b3d0d"
+          alt="Art3"
+        />
+        <div class="caption">
+          <strong>AI Renaissance</strong><br />Artist: CCC<br />Year: 2099
+        </div>
+      </div>
+
+      <div class="item">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyqOEHDByEOBnzTXm3YgU31iaycswornx51FdmIlq61fX8ebDvQKTbwnHW3F4Fdh3iI5I&usqp=CAU"
+          alt="Art4"
+        />
+        <div class="caption">
+          <strong>Synthetic Symphony</strong><br />Artist: DDD<br />Year: 2104
+        </div>
+      </div>
+
+      <div class="item">
+        <img
+          src="https://render.fineartamerica.com/images/rendered/medium/print/6/8/break/images-medium-5/ode-to-spring-steve-goad.jpg"
+          alt="Art5"
+        />
+        <div class="caption">
+          <strong>Quantum Bloom</strong><br />Artist: EEE<br />Year: 2122
+        </div>
+      </div>
+
+      <div class="item">
+        <img
+          src="https://plus.unsplash.com/premium_photo-1711136314731-8c3fe1831672?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZGlnaXRhbCUyMGFydHxlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000"
+          alt="Art6"
+        />
+        <div class="caption">
+          <strong>Digital Oracle</strong><br />Artist: FFF<br />Year: 2117
+        </div>
+      </div>
+    </div>
+
+    <footer>Where Art Meets Tomorrow — A Museum Beyond Time</footer>
+  </body>
+</html>
