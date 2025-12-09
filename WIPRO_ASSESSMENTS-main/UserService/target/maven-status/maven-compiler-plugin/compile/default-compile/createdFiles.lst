@@ -1,0 +1,8 @@
+com\example\beans\Contact.class
+com\example\UserServiceApplication.class
+com\example\beans\User.class
+com\example\controller\UserController.class
+com\example\service\UserService.class
+com\example\repo\UserRepo.class
+com\example\UserDataLoader.class
+com\example\service\ContactFeignClient.class
