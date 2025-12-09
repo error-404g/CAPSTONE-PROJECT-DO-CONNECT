@@ -1,0 +1,1165 @@
+Question 1
+Sort the Collection
+students are provided with a challenge to sort the given arraylist in the lesser lines of code. Student with minimum lines will win , try to write a code for it in less lines and win
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        //write your answer here
+        Scanner sc =  new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+
+        while(sc.hasNextInt()) list.add(sc.nextInt());
+        System.out.println("List before sort: " + list);
+
+        Collections.sort(list);
+        System.out.println("List after sort: " + list);
+    }
+}
+
+
+Attempt #1
+Oct 30, 6:01 PM
+Marks: 5
+Question 1
+Sort the Collection
+students are provided with a challenge to sort the given arraylist in the lesser lines of code. Student with minimum lines will win , try to write a code for it in less lines and win
+
+Input
+
+An arraylist of integers
+
+Output
+
+Sorted list
+
+Sample input
+
+1
+4
+5
+0
+
+output
+
+List before sort: [1, 4, 5, 0]
+List after sort: [0, 1, 4, 5]
+
+Your answer
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        //write your answer here
+        Scanner sc =  new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+
+        while(sc.hasNextInt()) list.add(sc.nextInt());
+        System.out.println("List before sort: " + list);
+
+        Collections.sort(list);
+        System.out.println("List after sort: " + list);
+    }
+}
+
+
+Question 2
+generics
+Design a generic class Test to make the main work for Number classes, do not alter main class
+
+import java.util.Scanner;
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int choice=sc.nextInt();
+
+		switch(choice) {
+		case 1:
+			Test<Integer> t1 = new Test<Integer>();
+			t1.add(30, 20);
+			break;
+		case 2: 
+			Test<Double> t2 = new Test<Double>();
+			t2.add(10.0, 20.0);
+			break;
+		case 3: 
+			Test<Float> t3 = new Test<Float>();
+			t3.add(20.0f, 20.0f);
+			break;
+
+		}
+
+	}
+
+}
+class Test<T extends Number>
+{
+  // complete this class
+  // implement add method accordingly
+	void add(T a, T b) {
+        double sum = a.doubleValue() + b.doubleValue();
+        System.out.println("the sum is = " + sum);
+}
+}
+
+
+Attempt #1
+Oct 30, 6:01 PM
+Marks: 5
+Question 1
+Sort the Collection
+students are provided with a challenge to sort the given arraylist in the lesser lines of code. Student with minimum lines will win , try to write a code for it in less lines and win
+
+Input
+
+An arraylist of integers
+
+Output
+
+Sorted list
+
+Sample input
+
+1
+4
+5
+0
+
+output
+
+List before sort: [1, 4, 5, 0]
+List after sort: [0, 1, 4, 5]
+
+Your answer
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        //write your answer here
+        Scanner sc =  new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+
+        while(sc.hasNextInt()) list.add(sc.nextInt());
+        System.out.println("List before sort: " + list);
+
+        Collections.sort(list);
+        System.out.println("List after sort: " + list);
+    }
+}
+Comment:
+
+All 2 test cases passed successfully.
+
+Question 2
+generics
+Design a generic class Test to make the main work for Number classes, do not alter main class
+
+input :
+
+1 
+
+output
+
+"the sum is = 50.0
+
+Your answer
+
+import java.util.Scanner;
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int choice=sc.nextInt();
+
+		switch(choice) {
+		case 1:
+			Test<Integer> t1 = new Test<Integer>();
+			t1.add(30, 20);
+			break;
+		case 2: 
+			Test<Double> t2 = new Test<Double>();
+			t2.add(10.0, 20.0);
+			break;
+		case 3: 
+			Test<Float> t3 = new Test<Float>();
+			t3.add(20.0f, 20.0f);
+			break;
+
+		}
+
+	}
+
+}
+class Test<T extends Number>
+{
+  // complete this class
+  // implement add method accordingly
+	void add(T a, T b) {
+        double sum = a.doubleValue() + b.doubleValue();
+        System.out.println("the sum is = " + sum);
+}
+}
+
+
+Question 3
+Library Management System.
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class EnhancedLibraryManagementSystem {
+    public static void main(String[] args) {
+    	Scanner scanner = new Scanner(System.in);
+    	int ch = scanner.nextInt();
+    	if(ch==1)
+    	{
+        Library<Book> bookLibrary = new Library<>();
+        int n = scanner.nextInt();
+        for(int i=1;i<=n ;i++ )
+        {
+        	int id = scanner.nextInt();
+        	scanner.nextLine();
+        	String name = scanner.nextLine();
+        	String author = scanner.nextLine();
+        	int numpages = scanner.nextInt();
+        	Book book = new Book(id,name,author,numpages);
+        	bookLibrary.addItem(book);
+        }
+        bookLibrary.displayItems();
+    	}
+    	
+        else if(ch==2)
+    	{
+        Library<DVD> dvdLibrary = new Library<>();
+         int n = scanner.nextInt();
+        for(int i=1;i<=n ;i++ )
+        {
+        	int id = scanner.nextInt();
+        	scanner.nextLine();
+        	String name = scanner.nextLine();
+        	String author = scanner.nextLine();
+        	int duration = scanner.nextInt();
+        	DVD dvd = new DVD(id,name,author,duration);
+        	dvdLibrary.addItem(dvd);
+        }
+            	
+        Library<Magazine> magazineLibrary = new Library<>();
+        
+         n = scanner.nextInt();
+        for(int i=1;i<=n ;i++ )
+        {
+        	int id = scanner.nextInt();
+        	scanner.nextLine();
+        	String name = scanner.nextLine();
+        	String author = scanner.nextLine();
+        	int issueno = scanner.nextInt();
+        	Magazine magazine = new Magazine(id,name,author,issueno);
+        	magazineLibrary.addItem(magazine);
+        }
+        dvdLibrary.displayItems();
+        magazineLibrary.displayItems();
+    	}
+   
+    	else if(ch==3) {
+    		  Library<Book> bookLibrary = new Library<>();
+    	        int n = scanner.nextInt();
+    	        for(int i=1;i<=n ;i++ )
+    	        {
+    	        	int id = scanner.nextInt();
+    	        	scanner.nextLine();
+    	        	String name = scanner.nextLine();
+    	        	String author = scanner.nextLine();
+    	        	int numpages = scanner.nextInt();
+    	        	Book book = new Book(id,name,author,numpages);
+    	        	bookLibrary.addItem(book);
+    	        }
+    	        
+    	
+        // Checking out and returning items
+        int itemId = scanner.nextInt();
+        
+        if( bookLibrary.checkOutItem(itemId))
+        {
+        	System.out.println("Item " + itemId + " checked out successfully.");
+        }
+        else
+        {
+        	 System.out.println("Item " + itemId + " not found in the library.");
+        }
+      
+               
+    	}
+
+    	else if(ch==4)
+    	{     
+        	           
+            Library<Magazine> magazineLibrary = new Library<>();
+            
+            int n = scanner.nextInt();
+            for(int i=1;i<=n ;i++ )
+            {
+            	int id = scanner.nextInt();
+            	scanner.nextLine();
+            	String name = scanner.nextLine();
+            	String author = scanner.nextLine();
+            	int issueno = scanner.nextInt();
+            	Magazine magazine = new Magazine(id,name,author,issueno);
+            	magazine.checkedOut= true;
+            	magazineLibrary.addItem(magazine);
+            }
+          
+        int 
+        itemId = scanner.nextInt();
+              
+          
+        if(magazineLibrary.returnItem(itemId))
+        {
+        	System.out.println("Item " + itemId + " returned successfully.");
+        }
+        else
+        {
+        	System.out.println("Item " + itemId + " not found in the library.");
+        }
+      
+    	}
+    
+    }
+}
+
+class LibraryItem {
+    private int itemId;
+    private String title;
+    private String creator;
+    public boolean checkedOut;
+
+  
+    public LibraryItem(int itemId, String title, String creator) {
+    	//write your code here
+        this.itemId = itemId;
+        this.title = title;
+        this.creator = creator;
+    }
+
+        public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    
+    
+    // define getter methods for itemId, title and creator
+    
+   public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void checkOut() throws AlreadyCheckedOutException{
+       //implement code and throw an exception if item already checked out
+       if (checkedOut) {
+            throw new AlreadyCheckedOutException("Item is already checked out.");
+        }
+        checkedOut = true;
+    }
+
+    public void returnItem() throws NotCheckedOutException{
+        //implement  code and also throw an exception if item is not checked out
+        if (!checkedOut) {
+            throw new NotCheckedOutException("Item is not checked out.");
+        }
+        checkedOut = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Item ID: " + itemId + "\nTitle: " + title + "\nCreator: " + creator + "\nChecked Out: " + checkedOut;
+    }
+}
+
+// create and define custom classes of exceptions
+class AlreadyCheckedOutException extends Exception {
+    public AlreadyCheckedOutException(String message) {
+        super(message);
+    }
+}
+
+class NotCheckedOutException extends Exception {
+    public NotCheckedOutException(String message) {
+        super(message);
+    }
+}
+
+
+
+class Book extends LibraryItem {
+    private int numPages;
+ 
+    // define parameterized constructor with 4 arguments  : int itemId, String title, String author, int numPages
+    public Book(int itemId, String title, String author, int numPages) {
+        super(itemId, title, author);
+        this.numPages = numPages;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nType: Book\nNumber of Pages: " + numPages;
+    }
+}
+
+class DVD extends LibraryItem {
+    private int duration; // in minutes
+
+ 
+    // define parameterized constructor with 4 arguments int itemId, String title, String director, int duration
+    public DVD(int itemId, String title, String director, int duration) {
+        super(itemId, title, director);
+        this.duration = duration;
+    }  
+
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nType: DVD\nDuration: " + duration + " minutes";
+    }
+}
+
+class Magazine extends LibraryItem {
+    private int issueNumber;
+
+  
+    // define parameterized consturcor with 4 arguments : int itemId, String title, String publisher, int issueNumber
+     public Magazine(int itemId, String title, String publisher, int issueNumber) {
+        super(itemId, title, publisher);
+        this.issueNumber = issueNumber;
+    }
+   
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nType: Magazine\nIssue Number: " + issueNumber;
+    }
+}
+
+class Library<T extends LibraryItem> {
+    private List<T> items = new ArrayList<>();
+
+    public void addItem(T item) {
+        items.add(item);
+    }
+
+    public void displayItems() {
+        for (T item : items) {
+            System.out.println(item);
+            System.out.println("-------------");
+        }
+    }
+
+    public boolean checkOutItem(int itemId) {
+    	// write your code hereT item = findItem(itemId);
+        T item = findItem(itemId);
+        if (item == null) return false;
+        try {
+            item.checkOut();
+            return true;
+        } catch (AlreadyCheckedOutException e) {
+            System.out.println(e.getMessage());
+    	   return false;
+        }
+    }
+
+    public boolean returnItem(int itemId) {
+        // write your code here
+        T item = findItem(itemId);
+        if (item == null) return false;
+        try {
+            item.returnItem();
+            return true;
+        } catch (NotCheckedOutException e) {
+            System.out.println(e.getMessage());
+    	return false;
+        }
+    }
+
+    private T findItem(int itemId) {
+        // write your code here
+        for (T item : items) {
+            if (item.getItemId() == itemId) {
+                return item;
+ }
+        }
+    	return null;
+    }
+    }
+
+
+Attempt #1
+Oct 30, 6:01 PM
+Marks: 5
+Question 1
+Sort the Collection
+students are provided with a challenge to sort the given arraylist in the lesser lines of code. Student with minimum lines will win , try to write a code for it in less lines and win
+
+Input
+
+An arraylist of integers
+
+Output
+
+Sorted list
+
+Sample input
+
+1
+4
+5
+0
+
+output
+
+List before sort: [1, 4, 5, 0]
+List after sort: [0, 1, 4, 5]
+
+Your answer
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        //write your answer here
+        Scanner sc =  new Scanner(System.in);
+        ArrayList<Integer> list = new ArrayList<>();
+
+        while(sc.hasNextInt()) list.add(sc.nextInt());
+        System.out.println("List before sort: " + list);
+
+        Collections.sort(list);
+        System.out.println("List after sort: " + list);
+    }
+}
+Comment:
+
+All 2 test cases passed successfully.
+
+Question 2
+generics
+Design a generic class Test to make the main work for Number classes, do not alter main class
+
+input :
+
+1 
+
+output
+
+"the sum is = 50.0
+
+Your answer
+
+import java.util.Scanner;
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int choice=sc.nextInt();
+
+		switch(choice) {
+		case 1:
+			Test<Integer> t1 = new Test<Integer>();
+			t1.add(30, 20);
+			break;
+		case 2: 
+			Test<Double> t2 = new Test<Double>();
+			t2.add(10.0, 20.0);
+			break;
+		case 3: 
+			Test<Float> t3 = new Test<Float>();
+			t3.add(20.0f, 20.0f);
+			break;
+
+		}
+
+	}
+
+}
+class Test<T extends Number>
+{
+  // complete this class
+  // implement add method accordingly
+	void add(T a, T b) {
+        double sum = a.doubleValue() + b.doubleValue();
+        System.out.println("the sum is = " + sum);
+}
+}
+
+
+
+
+
+
+
+
+
+
+Comment:
+
+All 2 test cases passed successfully.
+
+Question 3
+Library Management System
+
+
+Description :
+
+You are tasked with building an enhanced Library Management System in Java. The system manages different types of items in the library, such as books, DVDs, and magazines.  Each item has common attributes like title, author/creator, a unique identifier, and a status indicating whether it is checked out or available.
+
+
+
+
+Boiler plate code implementation of base class : LibraryItem and its subclasses : Book ,DVD and Magazine, and a generic class Library representing the library are given. 
+
+
+The enhanced system introduces the ability to check out and return items. Exceptions are used to handle scenarios where an item is already checked out or not checked out when attempting to return it.
+
+
+
+
+The code starts with the main class EnhancedLibraryManagementSystemwhich contains the main method to execute the Library Management System. 
+
+
+
+
+A description of each class is provided below, along with the task that you need to complete and finish.
+
+
+
+Classes and Methods:
+
+a) LibraryItem Class:
+Attributes:
+
+
+
+itemId (unique identifier)
+title
+creator (author for books, director for DVDs, etc.)
+checkedOut (status indicating whether the item is checked out.)
+Methods: () 
+
+toString(): Generates a string representation of the item.
+
+Your Tasks:
+
+ Constructor Implementation: (Complete the code)
+Implement the constructor for LibraryItem to initialize its attributes.
+  Getter Methods: (Complete the code)
+Define getter methods for itemId, title, and creator. which will return itemId, title and creator.
+Methods:(To be implemented)
+
+checkOut(): Marks the item as checked out.
+returnItem(): Marks the item as returned.
+b) Book Class (extends LibraryItem):
+Additional Attributes:
+
+numPages (number of pages) 
+Constructor:
+
+public Book(int itemId, String title, String author, int numPages);
+Methods:
+
+Inherited methods from LibraryItem. 
+
+Your Task:
+
+    Constructor Implementation: (Complete the code)
+
+Implement the Constructor : define a parameterized constructor with 4 arguments: int itemId, String title, String author, int numPages.
+Hint: Utilize the parent class's (LibraryItem) constructor.
+Implement getter method
+c) DVD Class (extends LibraryItem):
+Additional Attributes:
+
+duration (duration in minutes)
+Constructor:
+
+public DVD(int itemId, String title, String director, int duration);
+Methods:
+
+Inherited methods from LibraryItem.
+Tasks:
+
+Constructor Implementation: (Complete the code)
+        Implement the constructor. : define a parameterized constructor with 4 arguments int itemId, String title, String director, int   
+         duration.
+     Hint: Utilize the parent class's (LibraryItem) constructor.
+Implement getter method.
+d) Magazine Class (extends LibraryItem):
+Additional Attributes:
+
+issueNumber (magazine issue number)
+Constructor:
+
+public Magazine(int itemId, String title, String publisher, int issueNumber);
+Methods:
+
+Inherited methods from LibraryItem.
+Tasks:
+
+Constructor Implementation: (Complete the code) 
+   Implement the constructor. : define a parameterized constructor with 4 arguments: int itemId, String title, String publisher,   int issueNumber.
+ Hint: Utilize the parent class's (LibraryItem) constructor.
+Implement getter method.
+e) Library Class:
+Attributes:
+
+items (a list of library items)
+Methods:
+
+addItem(T item): Adds an item to the library. (Pre-Implemented)
+displayItems(): Displays details of all items in the library. (Pre-Implemented)
+checkOutItem(int itemId): Checks out an item by marking it as checked out.
+returnItem(int itemId): Returns a checked-out item by marking it as returned.
+private T findItem(int itemId): Finds an item in the library by its itemId.
+Tasks:
+
+Implement the methods: (Complete the code)
+public boolean checkOutItem(int itemId): Find the item if exist then , Checks out an item and returns true if successful, false otherwise.
+public boolean returnItem(int itemId): Find the item if exist then, Returns a checked-out item and returns true if successful, false otherwise.
+private T findItem(int itemId): Finds and returns an item by its itemId. Returns null if not found.
+
+
+Tasks:
+
+
+Custom Exceptions:( Implement)
+
+
+ItemAlreadyCheckedOutException Class (extends RuntimeException):
+
+Custom exception for handling cases where an item is already checked out. (It should display in the below given format)
+             format:  Item 101 is already checked out   
+
+Note* ( 101 is itemId)
+
+ItemNotCheckedOutException Class (extends RuntimeException):
+
+Custom exception for handling cases where an item is not checked out when attempting to return it.(It should display in the below given format)
+            format:  Item 101 is not checked out 
+
+Note* ( 101 is itemId)
+
+
+
+Your answer
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class EnhancedLibraryManagementSystem {
+    public static void main(String[] args) {
+    	Scanner scanner = new Scanner(System.in);
+    	int ch = scanner.nextInt();
+    	if(ch==1)
+    	{
+        Library<Book> bookLibrary = new Library<>();
+        int n = scanner.nextInt();
+        for(int i=1;i<=n ;i++ )
+        {
+        	int id = scanner.nextInt();
+        	scanner.nextLine();
+        	String name = scanner.nextLine();
+        	String author = scanner.nextLine();
+        	int numpages = scanner.nextInt();
+        	Book book = new Book(id,name,author,numpages);
+        	bookLibrary.addItem(book);
+        }
+        bookLibrary.displayItems();
+    	}
+    	
+        else if(ch==2)
+    	{
+        Library<DVD> dvdLibrary = new Library<>();
+         int n = scanner.nextInt();
+        for(int i=1;i<=n ;i++ )
+        {
+        	int id = scanner.nextInt();
+        	scanner.nextLine();
+        	String name = scanner.nextLine();
+        	String author = scanner.nextLine();
+        	int duration = scanner.nextInt();
+        	DVD dvd = new DVD(id,name,author,duration);
+        	dvdLibrary.addItem(dvd);
+        }
+            	
+        Library<Magazine> magazineLibrary = new Library<>();
+        
+         n = scanner.nextInt();
+        for(int i=1;i<=n ;i++ )
+        {
+        	int id = scanner.nextInt();
+        	scanner.nextLine();
+        	String name = scanner.nextLine();
+        	String author = scanner.nextLine();
+        	int issueno = scanner.nextInt();
+        	Magazine magazine = new Magazine(id,name,author,issueno);
+        	magazineLibrary.addItem(magazine);
+        }
+        dvdLibrary.displayItems();
+        magazineLibrary.displayItems();
+    	}
+   
+    	else if(ch==3) {
+    		  Library<Book> bookLibrary = new Library<>();
+    	        int n = scanner.nextInt();
+    	        for(int i=1;i<=n ;i++ )
+    	        {
+    	        	int id = scanner.nextInt();
+    	        	scanner.nextLine();
+    	        	String name = scanner.nextLine();
+    	        	String author = scanner.nextLine();
+    	        	int numpages = scanner.nextInt();
+    	        	Book book = new Book(id,name,author,numpages);
+    	        	bookLibrary.addItem(book);
+    	        }
+    	        
+    	
+        // Checking out and returning items
+        int itemId = scanner.nextInt();
+        
+        if( bookLibrary.checkOutItem(itemId))
+        {
+        	System.out.println("Item " + itemId + " checked out successfully.");
+        }
+        else
+        {
+        	 System.out.println("Item " + itemId + " not found in the library.");
+        }
+      
+               
+    	}
+
+    	else if(ch==4)
+    	{     
+        	           
+            Library<Magazine> magazineLibrary = new Library<>();
+            
+            int n = scanner.nextInt();
+            for(int i=1;i<=n ;i++ )
+            {
+            	int id = scanner.nextInt();
+            	scanner.nextLine();
+            	String name = scanner.nextLine();
+            	String author = scanner.nextLine();
+            	int issueno = scanner.nextInt();
+            	Magazine magazine = new Magazine(id,name,author,issueno);
+            	magazine.checkedOut= true;
+            	magazineLibrary.addItem(magazine);
+            }
+          
+        int 
+        itemId = scanner.nextInt();
+              
+          
+        if(magazineLibrary.returnItem(itemId))
+        {
+        	System.out.println("Item " + itemId + " returned successfully.");
+        }
+        else
+        {
+        	System.out.println("Item " + itemId + " not found in the library.");
+        }
+      
+    	}
+    
+    }
+}
+
+class LibraryItem {
+    private int itemId;
+    private String title;
+    private String creator;
+    public boolean checkedOut;
+
+  
+    public LibraryItem(int itemId, String title, String creator) {
+    	//write your code here
+        this.itemId = itemId;
+        this.title = title;
+        this.creator = creator;
+    }
+
+        public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    
+    
+    // define getter methods for itemId, title and creator
+    
+   public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void checkOut() throws AlreadyCheckedOutException{
+       //implement code and throw an exception if item already checked out
+       if (checkedOut) {
+            throw new AlreadyCheckedOutException("Item is already checked out.");
+        }
+        checkedOut = true;
+    }
+
+    public void returnItem() throws NotCheckedOutException{
+        //implement  code and also throw an exception if item is not checked out
+        if (!checkedOut) {
+            throw new NotCheckedOutException("Item is not checked out.");
+        }
+        checkedOut = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Item ID: " + itemId + "\nTitle: " + title + "\nCreator: " + creator + "\nChecked Out: " + checkedOut;
+    }
+}
+
+// create and define custom classes of exceptions
+class AlreadyCheckedOutException extends Exception {
+    public AlreadyCheckedOutException(String message) {
+        super(message);
+    }
+}
+
+class NotCheckedOutException extends Exception {
+    public NotCheckedOutException(String message) {
+        super(message);
+    }
+}
+
+
+
+class Book extends LibraryItem {
+    private int numPages;
+ 
+    // define parameterized constructor with 4 arguments  : int itemId, String title, String author, int numPages
+    public Book(int itemId, String title, String author, int numPages) {
+        super(itemId, title, author);
+        this.numPages = numPages;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nType: Book\nNumber of Pages: " + numPages;
+    }
+}
+
+class DVD extends LibraryItem {
+    private int duration; // in minutes
+
+ 
+    // define parameterized constructor with 4 arguments int itemId, String title, String director, int duration
+    public DVD(int itemId, String title, String director, int duration) {
+        super(itemId, title, director);
+        this.duration = duration;
+    }  
+
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nType: DVD\nDuration: " + duration + " minutes";
+    }
+}
+
+class Magazine extends LibraryItem {
+    private int issueNumber;
+
+  
+    // define parameterized consturcor with 4 arguments : int itemId, String title, String publisher, int issueNumber
+     public Magazine(int itemId, String title, String publisher, int issueNumber) {
+        super(itemId, title, publisher);
+        this.issueNumber = issueNumber;
+    }
+   
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nType: Magazine\nIssue Number: " + issueNumber;
+    }
+}
+
+class Library<T extends LibraryItem> {
+    private List<T> items = new ArrayList<>();
+
+    public void addItem(T item) {
+        items.add(item);
+    }
+
+    public void displayItems() {
+        for (T item : items) {
+            System.out.println(item);
+            System.out.println("-------------");
+        }
+    }
+
+    public boolean checkOutItem(int itemId) {
+    	// write your code hereT item = findItem(itemId);
+        T item = findItem(itemId);
+        if (item == null) return false;
+        try {
+            item.checkOut();
+            return true;
+        } catch (AlreadyCheckedOutException e) {
+            System.out.println(e.getMessage());
+    	   return false;
+        }
+    }
+
+    public boolean returnItem(int itemId) {
+        // write your code here
+        T item = findItem(itemId);
+        if (item == null) return false;
+        try {
+            item.returnItem();
+            return true;
+        } catch (NotCheckedOutException e) {
+            System.out.println(e.getMessage());
+    	return false;
+        }
+    }
+
+    private T findItem(int itemId) {
+        // write your code here
+        for (T item : items) {
+            if (item.getItemId() == itemId) {
+                return item;
+            }
+        }
+    	return null;
+    }
+    }
+
+
+Question 4
+Hashmap
+Write a java program to remove an element from the Map, you can use the remove() method. This method takes the key value and
+
+removes the mapping for a key from this map if it is present in the map.
+
+import java.util.Scanner;
+// Java program to remove
+// elements from HashMap
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+        //write your answer here
+    Map<Integer, String> map = new HashMap<>();
+
+        // Taking 4 string inputs
+        for (int i = 1; i <= 4; i++) {
+            map.put(i, sc.next());
+        }
+
+        // Read the key to remove
+        int keyToRemove = sc.nextInt();
+
+        // Display before removal
+        System.out.println("Mappings of HashMap are : " + map);
+
+        // Remove key if present
+        map.remove(keyToRemove);
+
+        // Display after removal
+        System.out.println("Mappings after removal are : " + map);
+    }
+}
+
+
+Question 5
+Target Sum
+Rohan is given a task two return indices of pair whose sum will be equal to the given target.
+Only one such pair is required.
+
+import java.util.*;
+
+class TargetSum{
+    static int[] twoSum(int n, int[] nums, int target) {
+       //write your answer here
+        Map<Integer, Integer> map = new HashMap<>(); // value -> index
+        for (int i = 0; i < n; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i}; // return indices
+            }
+            map.put(nums[i], i);
+        }
+        return new int[]{-1, -1};
+    }
+    
+    public static void main (String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++)
+            arr[i] = in.nextInt();
+        int target = in.nextInt();
+        int[] ans = twoSum(n,arr,target);
+        System.out.println("("+ans[0]+" , "+ans[1]+")");
+    }
+
+}

@@ -1,0 +1,53 @@
+Question 1
+
+Thread in java
+You are required to build a calculator using concept of multithreading which performs the following arithematic operations:
+
+Sum, difference, product , ratio, power.
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner s = new Scanner(System.in);
+
+        int x = s.nextInt();
+        int y = s.nextInt();
+
+        A1 a = new A1(x, y);
+
+        System.out.println("ARITHEMATIC OPERATIONS");
+
+        Thread t = new Thread(a);
+        t.start();
+    }
+}
+
+class A1 implements Runnable {
+
+    int i, j;
+
+    A1(int x, int y) {
+        i = x;
+        j = y;
+    }
+
+    public void run() {
+
+        System.out.println("SUM " + (i + j));
+        System.out.println("DIFFERENCE " + (i - j));
+
+        
+        System.out.println(" PRODUCT  " + (i * j));
+
+        if (j != 0)
+            System.out.println("RATIO  " + (i / j));
+        else
+            System.out.println("RATIO  Infinity");
+
+        System.out.println("POWER  " + Math.pow(i, j));
+        System.out.println("END OF A");
+}
+}
