@@ -1,0 +1,161 @@
+Question 1
+
+Arithmetic Operators in Java
+Instructions:
+
+Write a program that takes two numbers as input from the user and performs arithmetic operations on them using the arithmetic operators (sum, difference, product, quotient, remainder) in Java.
+
+import java.util.Scanner;
+
+public class ArithmeticOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num1 = scanner.nextInt();
+        int num2 = scanner.nextInt();
+
+        int sum = num1 + num2;
+        System.out.println("Sum: " + sum);
+
+        int diff = num1 - num2;
+        System.out.println("Difference: " + diff);
+
+        int mul = num1 * num2;
+        System.out.println("Product: " + mul);
+
+        int div = num1 / num2;
+        System.out.println("Quotient: " + div);
+
+        int rem = num1 % num2;
+        System.out.println("Remainder: " + rem);
+    }
+}
+
+
+Attempt #1
+Oct 24, 7:02 PM
+Marks: 4
+Question 1
+Marks: 1/1
+
+7. Arithmetic Operators in Java
+Instructions:
+
+Write a program that takes two numbers as input from the user and performs arithmetic operations on them using the arithmetic operators (sum, difference, product, quotient, remainder) in Java.
+
+Examples:
+
+# Examples: 
+1. int num1 = 10; 
+   int num2 = 5; 
+   int sum = num1 + num2; 
+   System.out.println(sum); // Output: 15  
+Sample Input & Output:
+
+Sample Input:
+Enter the first number: 10
+Enter the second number: 5
+
+Sample Output:
+Sum: 15
+Difference: 5
+Product: 50
+Quotient: 2
+Remainder: 0
+Hints:
+1. Use the Scanner class to read input from the user.
+2. Declare variables to store the input values and the results of the arithmetic operations.
+3. Use the appropriate arithmetic operators to perform the calculations.
+4. Print the results using the System.out.println() method.
+5. Remember to handle division by zero when calculating the quotient.
+
+Your answer
+
+import java.util.Scanner;
+
+public class ArithmeticOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num1 = scanner.nextInt();
+        int num2 = scanner.nextInt();
+
+        int sum = num1 + num2;
+        System.out.println("Sum: " + sum);
+
+        int diff = num1 - num2;
+        System.out.println("Difference: " + diff);
+
+        int mul = num1 * num2;
+        System.out.println("Product: " + mul);
+
+        int div = num1 / num2;
+        System.out.println("Quotient: " + div);
+
+        int rem = num1 % num2;
+        System.out.println("Remainder: " + rem);
+    }
+}
+
+
+Question 2
+
+Logical Operators in Java
+Instructions:
+
+Write a program that takes two boolean values as input and performs logical operations (AND, OR) on them using the logical operators& print the result.
+
+import java.util.Scanner;
+
+public class LogicalOperatorsExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        boolean input1 = scanner.nextBoolean();
+        boolean input2 = scanner.nextBoolean();
+
+        System.out.println(input1 && input2);
+        System.out.println(input1 || input2);
+        
+        scanner.close();
+    }
+}
+
+
+Question 3
+
+Relational Operators in Java
+Instructions:
+
+Write a program that takes two integers as input and compares them using relational operators. Print 'true' if the first integer is greater than the second integer, and 'false' otherwise.
+
+import java.util.Scanner;
+
+public class RelationalOperatorExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num1 = scanner.nextInt();
+        int num2 = scanner.nextInt();
+        
+        System.out.println(num1 > num2);
+        scanner.close();
+    }
+}
+
+Question 4
+
+Check Number Parity
+Write a program in java to check whether the given number is an even number or not using if else statement.
+
+import java.util.Scanner;
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        if(num % 2 == 0){
+            System.out.println("No is Even");
+        }else{
+            System.out.println("No is odd");
+        }
+
+    }
+}

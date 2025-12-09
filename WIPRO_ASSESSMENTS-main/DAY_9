@@ -1,0 +1,61 @@
+Question 1
+
+MYSQL : Scheduling Errors
+Write a query which displays the year in ascending order ,find for each semester how many professors are involved in delivering the session for the courses 1 to 10.
+
+The output should contain the columns : year|semester|no_of_professor
+no_of_professor: Total number of professor
+
+SELECT 
+    s.year,
+    s.semester,
+    COUNT(DISTINCT s.professor_id) AS no_of_professor
+FROM 
+    schedule s
+WHERE 
+    s.course_id BETWEEN 1 AND 10
+GROUP BY 
+    s.year, s.semester
+ORDER BY 
+    s.year ASC;
+
+
+Question 2
+
+Product details
+The e-commerce offering online services to their clients. They are managing the product's sale and purchase through this website. They wants find the products with different categories like furniture,laptop and mobile
+
+SELECT *
+FROM product
+WHERE category IN ('furniture', 'laptop', 'mobile')
+  AND price < 50000;
+
+
+Question 3
+Marks: 1/1
+
+Employeement Salary Analysis
+ A multinational company is conducting an analysis of employee performance to identify top-performing individuals within each department. Your task is to retrieve the names of employees who earn a higher salary than the average salary in their respective departments. Write an SQL query to extract the names of employees who earn a salary higher than the average salary in their respective departments. The result should include the first name, last name, department name, and salary of these top-performing employees in ascending order according to the salary.
+
+SELECT 
+    e.FirstName,
+    e.LastName,
+    d.DepartmentName,
+    e.Salary
+FROM 
+    Employees e
+JOIN 
+    Departments d
+ON 
+    e.DepartmentID = d.DepartmentID
+WHERE 
+    e.Salary > (
+        SELECT 
+            AVG(Salary)
+        FROM 
+            Employees
+        WHERE 
+            DepartmentID = e.DepartmentID
+    )
+ORDER BY 
+    e.Salary ASC;
