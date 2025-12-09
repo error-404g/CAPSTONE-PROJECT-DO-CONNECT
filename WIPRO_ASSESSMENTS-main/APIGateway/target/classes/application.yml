@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: contact-service
+          uri: lb://contact-ms
+          predicates:
+            - Path=/contacts/**
+          
+        - id: user-service
+          uri: lb://user-ms
+          predicates:
+            - Path=/user/**
+          
+           
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    
+server:
+  port: 9000
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
